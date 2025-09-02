@@ -1,0 +1,75 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Sep  2 21:41:28 2025
+
+@author: salmaqr
+"""
+
+def grade_to_gpa(grade):
+    if grade >= 90: return 4.0
+    elif grade >= 85: return 3.7
+    elif grade >= 80: return 3.3
+    elif grade >= 75: return 3.0
+    elif grade >= 70: return 2.7
+    elif grade >= 65: return 2.3
+    elif grade >= 60: return 2.0
+    elif grade >= 55: return 1.7
+    elif grade >= 50: return 1.0
+    else: return 0.0
+
+bit_info = "BIT (Business Information Technology) combines IT skills with Business knowledge, focusing on databases, programming, management, and decision support systems."
+bit_core_courses = ["Databases", "Programming", "Management Information Systems", "Networks", "Business Analytics"]
+semesters = []
+
+try:
+    num_semesters = int(input("Enter number of semesters: "))
+    for s in range(1, num_semesters + 1):
+        print("\nSemester", s)
+        num_courses = int(input("Enter number of courses this semester: "))
+        total_points, total_credits = 0, 0
+
+        for c in range(1, num_courses + 1):
+            course_name = input(f"Enter name of course {c}: ")
+            grade = float(input(f"Enter grade for {course_name} (0-100): "))
+            credits = int(input(f"Enter credit hours for {course_name}: "))
+            gpa = grade_to_gpa(grade)
+            total_points += gpa * credits
+            total_credits += credits
+
+        semester_gpa = total_points / total_credits if total_credits > 0 else 0
+        semesters.append((semester_gpa, total_credits))
+        print("Semester", s, "GPA:", round(semester_gpa, 2))
+
+    all_points = sum(gpa * credits for gpa, credits in semesters)
+    all_credits = sum(credits for _, credits in semesters)
+    cumulative_gpa = all_points / all_credits if all_credits > 0 else 0
+
+    print("\n=== Results ===")
+    for i, (gpa, _) in enumerate(semesters, start=1):
+        print("Semester", i, "GPA:", round(gpa, 2))
+    print("Cumulative GPA:", round(cumulative_gpa, 2))
+
+    print("\nMajor Selected: BIT (Business Information Technology)")
+    print("Note:", bit_info)
+
+    print("\n=== Advice to Improve GPA ===")
+    print("1. Focus on core courses like Databases, Programming, and Management.")
+    print("2. Distribute your study time wisely, especially for technical subjects.")
+    print("3. Ask for help early if you struggle with a topic.")
+    print("4. Try to balance between IT skills and Business subjects.")
+    print("5. Use university resources such as tutoring or workshops.")
+
+    if cumulative_gpa < 2.0:
+        print("\n !!! Your GPA is low. Focus on BIT core courses like:", ", ".join(bit_core_courses))
+        print("Also, pay extra attention to courses with 3 or more credit hours, as they impact your GPA more.")
+    elif cumulative_gpa < 3.0:
+        print("\n You're doing okay, but you can aim higher!")
+        print("Focus on strengthening your performance in core BIT subjects like:", ", ".join(bit_core_courses[:3]))
+        print("And prioritize courses with 3+ credit hours to raise your GPA effectively.")
+    else:
+        print("\n Excellent work! Keep focusing on both IT and Business areas to maintain your strong performance.")
+
+
+except ValueError:
+    print("Invalid input! Please enter numbers only.")
+#salma radaideh
